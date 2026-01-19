@@ -1,0 +1,974 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="theme-color" content="#003366">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <link rel="manifest" href="data:application/json;base64,eyJuYW1lIjoiQUFBU1NVIEluY2x1c2l2ZSBMZWFkZXJzaGlwIiwic2hvcnRfbmFtZSI6IkFBQVNTVSBJTCIsInN0YXJ0X3VybCI6Ii4iLCJkaXNwbGF5Ijoic3RhbmRhbG9uZSIsImJhY2tncm91bmRfY29sb3IiOiIjMDAzMzY2IiwidGhlbWVfY29sb3IiOiIjMDAzMzY2In0=">
+    <title>AAASSU Inclusive Leadership Portal | Members First | G$D | True North</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Source+Sans+Pro:wght@400;600;700&display=swap');
+        :root{--aaa-blue:#003366;--aaa-blue-light:#0066CC;--aaa-blue-dark:#002244;--aaa-red:#CC0000;--gold:#FFD700;--gold-dark:#B8860B;--green:#228B22;--green-light:#32CD32;--surface:#f0f4f8;--card:#ffffff;--text:#1a1a2e;--text-muted:#64748b;--border:#cbd5e1;--shadow:0 4px 20px rgba(0,51,102,0.15);--radius:12px;--radius-sm:8px;--low-red:#fee2e2;--avg-yellow:#fef3c7;--high-green:#dcfce7}
+        *{box-sizing:border-box;margin:0;padding:0}
+        body{font-family:'Source Sans Pro',-apple-system,sans-serif;background:linear-gradient(135deg,var(--aaa-blue-dark),var(--aaa-blue));min-height:100vh;color:var(--text);line-height:1.6}
+        .login-container{min-height:100vh;display:flex;justify-content:center;align-items:center;padding:20px;position:relative;overflow:hidden}
+        .login-container::before{content:'';position:absolute;top:-50%;left:-50%;width:200%;height:200%;background:radial-gradient(circle,rgba(255,215,0,0.1) 0%,transparent 50%);animation:pulse 15s ease-in-out infinite}
+        @keyframes pulse{0%,100%{transform:scale(1);opacity:0.5}50%{transform:scale(1.1);opacity:0.8}}
+        .login-box{background:var(--card);padding:50px 40px;border-radius:20px;box-shadow:var(--shadow);max-width:480px;width:100%;position:relative;z-index:10;text-align:center;border-top:5px solid var(--gold)}
+        .login-logo{font-size:70px;margin-bottom:15px;animation:bounce 2s ease infinite}
+        @keyframes bounce{0%,100%{transform:translateY(0)}50%{transform:translateY(-10px)}}
+        .login-title{font-family:'Bebas Neue',sans-serif;font-size:1.8em;color:var(--aaa-blue);letter-spacing:2px;margin-bottom:5px}
+        .login-subtitle{font-size:0.95em;color:var(--text-muted);margin-bottom:10px}
+        .login-tagline{background:linear-gradient(135deg,var(--aaa-blue),var(--aaa-blue-light));color:var(--gold);padding:10px 20px;border-radius:25px;font-weight:700;letter-spacing:2px;font-size:0.85em;margin-bottom:25px;display:inline-block}
+        .login-field{margin-bottom:18px;text-align:left}
+        .login-field label{display:block;color:var(--aaa-blue);font-weight:700;margin-bottom:6px;font-size:0.9em}
+        .login-field input,.login-field select{width:100%;padding:12px;border:2px solid var(--border);border-radius:var(--radius);font-size:1em;background:var(--surface)}
+        .login-field input:focus,.login-field select:focus{outline:none;border-color:var(--aaa-blue);background:var(--card)}
+        .login-field input.error{border-color:var(--aaa-red);background:var(--low-red)}
+        .login-btn{width:100%;padding:14px;background:linear-gradient(135deg,var(--aaa-blue),var(--aaa-blue-light));color:white;border:none;border-radius:var(--radius);font-size:1.1em;font-weight:700;cursor:pointer;text-transform:uppercase;letter-spacing:2px;margin-top:10px}
+        .login-btn:hover{transform:translateY(-2px);box-shadow:var(--shadow)}
+        .login-btn:disabled{opacity:0.6;cursor:not-allowed;transform:none}
+        .login-source{margin-top:20px;padding:12px;background:var(--surface);border-radius:var(--radius);font-size:0.8em;color:var(--text-muted);border-left:4px solid var(--gold)}
+        .login-error{color:var(--aaa-red);font-weight:600;margin-bottom:15px;padding:10px;background:var(--low-red);border-radius:var(--radius-sm);display:none}
+        .login-error.show{display:block}
+        .password-hint{font-size:0.75em;color:var(--text-muted);margin-top:5px}
+        .app-container{display:none;min-height:100vh;background:var(--surface)}
+        .app-header{background:linear-gradient(135deg,var(--aaa-blue),var(--aaa-blue-light));color:white;padding:15px 20px;position:sticky;top:0;z-index:1000;box-shadow:var(--shadow)}
+        .header-top{display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:10px}
+        .header-brand{display:flex;align-items:center;gap:12px}
+        .header-brand span{font-size:1.8em}
+        .header-title{font-family:'Bebas Neue',sans-serif;font-size:1.3em;letter-spacing:2px}
+        .header-tagline{background:rgba(255,215,0,0.2);color:var(--gold);padding:5px 12px;border-radius:15px;font-size:0.75em;font-weight:700;letter-spacing:1px}
+        .header-user{display:flex;align-items:center;gap:10px}
+        .user-info{text-align:right;font-size:0.85em}
+        .user-name{font-weight:700}
+        .logout-btn{background:var(--gold);color:var(--aaa-blue);border:none;padding:8px 15px;border-radius:var(--radius-sm);font-weight:700;cursor:pointer;font-size:0.8em}
+        .nav-tabs{display:flex;gap:8px;margin-top:12px;flex-wrap:wrap}
+        .nav-tab{background:rgba(255,255,255,0.1);color:white;border:none;padding:8px 14px;border-radius:var(--radius-sm);cursor:pointer;font-weight:600;font-size:0.85em;transition:all 0.2s}
+        .nav-tab:hover,.nav-tab.active{background:var(--gold);color:var(--aaa-blue)}
+        .app-content{padding:20px;max-width:1400px;margin:0 auto}
+        .section{display:none}
+        .section.active{display:block}
+        .section-title{font-family:'Bebas Neue',sans-serif;font-size:1.6em;color:var(--aaa-blue);margin-bottom:15px;letter-spacing:1px;display:flex;align-items:center;gap:10px}
+        .card{background:var(--card);border-radius:var(--radius);padding:20px;box-shadow:var(--shadow);margin-bottom:15px;border-left:4px solid var(--aaa-blue)}
+        .card-title{font-weight:700;color:var(--aaa-blue);margin-bottom:10px;font-size:1.1em}
+        .grid-2{display:grid;grid-template-columns:repeat(auto-fit,minmax(300px,1fr));gap:15px}
+        .grid-3{display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:15px}
+        .behavior-card{background:var(--card);border-radius:var(--radius);padding:15px;box-shadow:var(--shadow);cursor:pointer;transition:transform 0.2s,box-shadow 0.2s;border-left:4px solid var(--aaa-blue)}
+        .behavior-card:hover{transform:translateY(-3px);box-shadow:0 8px 30px rgba(0,51,102,0.2)}
+        .behavior-number{background:var(--aaa-blue);color:white;width:35px;height:35px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-weight:700;margin-bottom:10px}
+        .behavior-title{font-weight:700;color:var(--aaa-blue);font-size:0.95em;margin-bottom:8px}
+        .level-indicators{display:flex;gap:6px}
+        .level-dot{width:12px;height:12px;border-radius:50%}
+        .level-dot.red{background:var(--aaa-red)}
+        .level-dot.yellow{background:var(--gold)}
+        .level-dot.green{background:var(--green)}
+        .level-badge{padding:4px 10px;border-radius:12px;font-size:0.75em;font-weight:700}
+        .level-low{background:var(--low-red);color:var(--aaa-red)}
+        .level-avg{background:var(--avg-yellow);color:var(--gold-dark)}
+        .level-high{background:var(--high-green);color:var(--green)}
+        .week-card{background:var(--card);border-radius:var(--radius);padding:15px;box-shadow:var(--shadow);border-left:4px solid var(--aaa-blue)}
+        .week-card.foundation{border-left-color:var(--aaa-blue)}
+        .week-card.development{border-left-color:var(--gold)}
+        .week-card.integration{border-left-color:var(--green)}
+        .week-number{font-weight:700;color:var(--aaa-blue);font-size:0.9em;margin-bottom:5px}
+        .week-focus{font-weight:700;font-size:1em;margin-bottom:10px}
+        .week-item{padding:8px 10px;background:var(--surface);border-radius:var(--radius-sm);margin-bottom:6px;font-size:0.85em}
+        .week-item strong{color:var(--aaa-blue)}
+        .assessment-table{width:100%;border-collapse:collapse;font-size:0.9em}
+        .assessment-table th,.assessment-table td{padding:12px;border:1px solid var(--border);text-align:left}
+        .assessment-table th{background:var(--aaa-blue);color:white;font-weight:700}
+        .assessment-table tr:nth-child(even){background:var(--surface)}
+        .score-input{width:60px;padding:8px;border:2px solid var(--border);border-radius:var(--radius-sm);text-align:center;font-weight:700}
+        .total-row{background:var(--gold) !important;font-weight:700}
+        .calendar-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(250px,1fr));gap:12px}
+        .calendar-month{background:var(--card);border-radius:var(--radius);padding:15px;box-shadow:var(--shadow);border-top:4px solid var(--aaa-blue)}
+        .calendar-month-header{font-weight:700;color:var(--aaa-blue);font-size:1em;margin-bottom:5px}
+        .calendar-month-theme{font-size:0.85em;color:var(--text-muted);margin-bottom:8px;font-style:italic}
+        .calendar-month-focus{font-size:0.8em;background:var(--surface);padding:8px;border-radius:var(--radius-sm)}
+        .question-card{background:var(--card);border-radius:var(--radius);padding:20px;box-shadow:var(--shadow);margin-bottom:15px}
+        .question-text{font-weight:600;margin-bottom:15px;font-size:1.05em}
+        .question-options{display:flex;flex-direction:column;gap:10px}
+        .question-option{padding:12px 15px;background:var(--surface);border-radius:var(--radius-sm);cursor:pointer;border:2px solid transparent;transition:all 0.2s}
+        .question-option:hover{border-color:var(--aaa-blue)}
+        .question-option.selected{border-color:var(--aaa-blue);background:rgba(0,51,102,0.1)}
+        .question-option.correct{border-color:var(--green);background:var(--high-green)}
+        .question-option.incorrect{border-color:var(--aaa-red);background:var(--low-red)}
+        .quiz-result{padding:20px;background:var(--high-green);border-radius:var(--radius);text-align:center;font-weight:700;font-size:1.2em;color:var(--green)}
+        .modal-overlay{position:fixed;top:0;left:0;right:0;bottom:0;background:rgba(0,0,0,0.6);display:none;justify-content:center;align-items:center;z-index:2000;padding:20px}
+        .modal-overlay.active{display:flex}
+        .modal-content{background:var(--card);border-radius:var(--radius);padding:25px;max-width:700px;width:100%;max-height:90vh;overflow-y:auto;position:relative}
+        .modal-close{position:absolute;top:15px;right:15px;background:none;border:none;font-size:1.5em;cursor:pointer;color:var(--text-muted)}
+        .btn{padding:10px 20px;border:none;border-radius:var(--radius-sm);font-weight:700;cursor:pointer;font-size:0.9em;transition:all 0.2s}
+        .btn-primary{background:var(--aaa-blue);color:white}
+        .btn-primary:hover{background:var(--aaa-blue-light)}
+        .btn-gold{background:var(--gold);color:var(--aaa-blue)}
+        .btn-gold:hover{background:var(--gold-dark)}
+        .tab-btns{display:flex;gap:8px;margin-bottom:15px;flex-wrap:wrap}
+        .tab-btn{padding:8px 16px;background:var(--surface);border:2px solid var(--border);border-radius:var(--radius-sm);cursor:pointer;font-weight:600;font-size:0.85em}
+        .tab-btn.active{background:var(--aaa-blue);color:white;border-color:var(--aaa-blue)}
+        .concept-card{background:var(--card);border-radius:var(--radius);padding:20px;box-shadow:var(--shadow);margin-bottom:15px}
+        .concept-title{font-weight:700;color:var(--aaa-blue);font-size:1.2em;margin-bottom:10px}
+        .concept-def{font-style:italic;margin-bottom:15px;padding:10px;background:var(--surface);border-radius:var(--radius-sm)}
+        .offline-indicator{position:fixed;bottom:20px;right:20px;background:var(--aaa-red);color:white;padding:10px 20px;border-radius:var(--radius);font-weight:700;display:none;z-index:3000}
+        .offline-indicator.show{display:block}
+        .progress-bar{height:8px;background:var(--border);border-radius:4px;overflow:hidden;margin-bottom:10px}
+        .progress-fill{height:100%;background:linear-gradient(90deg,var(--aaa-blue),var(--green));transition:width 0.3s}
+        .admin-badge{background:var(--gold);color:var(--aaa-blue);padding:2px 8px;border-radius:10px;font-size:0.7em;font-weight:700;margin-left:8px}
+        .difficulty-badge{display:inline-block;padding:3px 8px;border-radius:10px;font-size:0.7em;font-weight:700;margin-left:8px}
+        .difficulty-basic{background:var(--high-green);color:var(--green)}
+        .difficulty-intermediate{background:var(--avg-yellow);color:var(--gold-dark)}
+        .difficulty-advanced{background:var(--low-red);color:var(--aaa-red)}
+        .quiz-counter{text-align:center;margin-bottom:15px;font-weight:600;color:var(--aaa-blue)}
+        @media(max-width:768px){.login-box{padding:30px 20px}.header-title{font-size:1.1em}.nav-tabs{gap:5px}.nav-tab{padding:6px 10px;font-size:0.8em}.app-content{padding:15px}.grid-2,.grid-3{grid-template-columns:1fr}}
+    </style>
+</head>
+<body>
+    <!-- LOGIN SCREEN -->
+    <div class="login-container" id="loginContainer">
+        <div class="login-box">
+            <div class="login-logo">🛡️</div>
+            <h1 class="login-title">AAASSU Inclusive Leadership</h1>
+            <p class="login-subtitle">Research-Based Implementation Portal</p>
+            <div class="login-tagline">Members First | G$D | True North</div>
+            
+            <div class="login-error" id="loginError">Invalid credentials. Please try again.</div>
+            
+            <form onsubmit="return handleLogin(event)">
+                <div class="login-field">
+                    <label>Your Name</label>
+                    <input type="text" id="loginName" placeholder="Enter your name" required>
+                </div>
+                <div class="login-field">
+                    <label>Access Password</label>
+                    <input type="password" id="loginPassword" placeholder="Enter portal password" required>
+                    <div class="password-hint">🔒 Contact your Manager for access credentials</div>
+                </div>
+                <div class="login-field">
+                    <label>Your Role</label>
+                    <select id="loginRole" required>
+                        <option value="">Select your role...</option>
+                        <option value="vp">VP / National Director</option>
+                        <option value="director">Director Operations</option>
+                        <option value="manager">Manager / Team Lead</option>
+                        <option value="training">Training Director</option>
+                        <option value="coord_mgr">Coordinator Manager</option>
+                        <option value="member_coord">Member Coordinator</option>
+                        <option value="pro_coord">Pro Coordinator</option>
+                        <option value="technician">Technician / Pro</option>
+                    </select>
+                </div>
+                <div class="login-field">
+                    <label>Territory</label>
+                    <select id="loginTerritory" required>
+                        <option value="">Select territory...</option>
+                        <option value="arizona">Arizona</option>
+                        <option value="california">California</option>
+                        <option value="nevada">Nevada</option>
+                        <option value="corporate">Corporate</option>
+                    </select>
+                </div>
+                <button type="submit" class="login-btn" id="loginBtn">Enter Portal</button>
+            </form>
+            <div class="login-source">
+                <strong>📚 Research Foundation:</strong> Based on "How Inclusive Is Your Leadership?" by Dr. Salwa Rahim-Dillard, Harvard Business Review (April 2021)
+            </div>
+        </div>
+    </div>
+
+    <!-- MAIN APPLICATION -->
+    <div class="app-container" id="appContainer">
+        <header class="app-header">
+            <div class="header-top">
+                <div class="header-brand">
+                    <span>🛡️</span>
+                    <div>
+                        <div class="header-title">AAASSU INCLUSIVE LEADERSHIP</div>
+                        <div class="header-tagline">Members First | G$D | True North</div>
+                    </div>
+                </div>
+                <div class="header-user">
+                    <div class="user-info">
+                        <div class="user-name" id="displayUserName">User</div>
+                        <div id="displayUserRole">Role</div>
+                    </div>
+                    <button class="logout-btn" onclick="handleLogout()">Logout</button>
+                </div>
+            </div>
+            <div class="nav-tabs">
+                <button class="nav-tab active" data-section="dashboard">📊 Dashboard</button>
+                <button class="nav-tab" data-section="behaviors">🎯 10 Behaviors</button>
+                <button class="nav-tab" data-section="weekly">📅 12-Week Plan</button>
+                <button class="nav-tab" data-section="assessment">📝 Self-Assessment</button>
+                <button class="nav-tab" data-section="concepts">🌉 Bridge & Bond</button>
+                <button class="nav-tab" data-section="calendar">📆 Annual Calendar</button>
+                <button class="nav-tab" data-section="quiz">❓ Knowledge Check</button>
+                <button class="nav-tab" data-section="lifetime">🏆 Lifetime Journey</button>
+            </div>
+        </header>
+
+        <main class="app-content">
+            <!-- DASHBOARD SECTION -->
+            <section class="section active" id="dashboard">
+                <h2 class="section-title">📊 Your Inclusive Leadership Dashboard</h2>
+                <div class="grid-2">
+                    <div class="card">
+                        <div class="card-title">📈 Your Progress</div>
+                        <div class="progress-bar"><div class="progress-fill" id="overallProgress" style="width:0%"></div></div>
+                        <p id="progressText">Complete your self-assessment to see your progress</p>
+                        <button class="btn btn-primary" onclick="showSection('assessment')" style="margin-top:10px">Take Assessment</button>
+                    </div>
+                    <div class="card">
+                        <div class="card-title">📅 Current Week Focus</div>
+                        <div id="currentWeekFocus">Loading...</div>
+                    </div>
+                </div>
+                <div class="card">
+                    <div class="card-title">🎯 The 10 HBR Inclusive Leadership Behaviors</div>
+                    <p style="margin-bottom:15px;color:var(--text-muted)">Click any behavior to learn more about Low, Average, and High ability levels.</p>
+                    <div class="grid-3" id="dashboardBehaviors"></div>
+                </div>
+                <div class="card">
+                    <div class="card-title">💡 Key Concepts from HBR Research</div>
+                    <div class="grid-3">
+                        <div style="padding:15px;background:var(--surface);border-radius:var(--radius-sm);border-left:4px solid var(--aaa-blue)">
+                            <strong style="color:var(--aaa-blue)">🌉 BRIDGING</strong>
+                            <p style="font-size:0.9em;margin-top:5px">Connecting authentically with people DIFFERENT from you. Essential for white leaders.</p>
+                        </div>
+                        <div style="padding:15px;background:var(--surface);border-radius:var(--radius-sm);border-left:4px solid var(--gold)">
+                            <strong style="color:var(--gold-dark)">🤝 BONDING</strong>
+                            <p style="font-size:0.9em;margin-top:5px">Connecting authentically with people SIMILAR to you in marginalized identity. Essential for BIPOC leaders.</p>
+                        </div>
+                        <div style="padding:15px;background:var(--surface);border-radius:var(--radius-sm);border-left:4px solid var(--aaa-red)">
+                            <strong style="color:var(--aaa-red)">⚠️ MIRRORING</strong>
+                            <p style="font-size:0.9em;margin-top:5px">When BIPOC modify behavior to match white managers. WARNING: Indicates non-inclusive environment.</p>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- 10 BEHAVIORS SECTION -->
+            <section class="section" id="behaviors">
+                <h2 class="section-title">🎯 The 10 HBR Inclusive Leadership Behaviors</h2>
+                <p style="margin-bottom:20px;color:var(--text-muted)">Based on research by Dr. Salwa Rahim-Dillard involving 100+ mid and senior-level BIPOC employees across multiple industries.</p>
+                <div class="grid-3" id="behaviorsGrid"></div>
+            </section>
+
+            <!-- 12-WEEK PLAN SECTION -->
+            <section class="section" id="weekly">
+                <h2 class="section-title">📅 Your 12-Week Implementation Plan</h2>
+                <p style="margin-bottom:15px;color:var(--text-muted)">Each week focuses on a specific HBR behavior with daily practices, meeting agendas, and bridging actions.</p>
+                <div class="tab-btns" id="roleTabs">
+                    <button class="tab-btn active" data-role="vp">VP/Director</button>
+                    <button class="tab-btn" data-role="director">Director</button>
+                    <button class="tab-btn" data-role="manager">Manager</button>
+                    <button class="tab-btn" data-role="coordinator">Coordinator</button>
+                    <button class="tab-btn" data-role="technician">Technician</button>
+                </div>
+                <div id="roleContent"></div>
+            </section>
+
+            <!-- SELF-ASSESSMENT SECTION -->
+            <section class="section" id="assessment">
+                <h2 class="section-title">📝 Inclusive Leadership Self-Assessment</h2>
+                <p style="margin-bottom:20px;color:var(--text-muted)">Rate yourself 1-5 on each behavior. Be honest - this is for your own development.</p>
+                <div class="card">
+                    <table class="assessment-table">
+                        <thead>
+                            <tr>
+                                <th style="width:5%">#</th>
+                                <th style="width:25%">Behavior</th>
+                                <th style="width:22%">Low (1-2)</th>
+                                <th style="width:22%">Average (3)</th>
+                                <th style="width:22%">High (4-5)</th>
+                                <th style="width:8%">Score</th>
+                            </tr>
+                        </thead>
+                        <tbody id="assessmentBody"></tbody>
+                        <tfoot>
+                            <tr class="total-row">
+                                <td colspan="5" style="text-align:right;padding-right:20px;">TOTAL SCORE:</td>
+                                <td id="totalScore">0</td>
+                            </tr>
+                        </tfoot>
+                    </table>
+                </div>
+                <div class="card">
+                    <div class="card-title">📊 Scoring Guide (from HBR Research)</div>
+                    <div class="grid-3">
+                        <div style="padding:15px;background:var(--low-red);border-radius:var(--radius-sm)">
+                            <strong style="color:var(--aaa-red)">10-20: LOW ABILITY</strong>
+                            <p style="font-size:0.85em;margin-top:5px">Significant development needed; behaviors likely causing harm to BIPOC employees.</p>
+                        </div>
+                        <div style="padding:15px;background:var(--avg-yellow);border-radius:var(--radius-sm)">
+                            <strong style="color:var(--gold-dark)">21-35: AVERAGE ABILITY</strong>
+                            <p style="font-size:0.85em;margin-top:5px">Some positive impact but inconsistent; room for growth.</p>
+                        </div>
+                        <div style="padding:15px;background:var(--high-green);border-radius:var(--radius-sm)">
+                            <strong style="color:var(--green)">36-50: HIGH ABILITY</strong>
+                            <p style="font-size:0.85em;margin-top:5px">Positive impact; continue growing. DEI work is never-ending.</p>
+                        </div>
+                    </div>
+                </div>
+                <button class="btn btn-primary" onclick="saveAssessment()" style="margin-top:15px">💾 Save My Assessment</button>
+            </section>
+
+            <!-- BRIDGING & BONDING SECTION -->
+            <section class="section" id="concepts">
+                <h2 class="section-title">🌉 Bridging & Bonding: Key Concepts</h2>
+                <div class="concept-card">
+                    <div class="concept-title">🌉 BRIDGING</div>
+                    <div class="concept-def">"Connecting authentically with people who are DIFFERENT from you demographically."</div>
+                    <p><strong>Who needs it:</strong> White leaders interacting across demographic differences</p>
+                    <p style="margin-top:10px"><strong>Key finding:</strong> More than 89% of white leaders in the HBR study severely lacked bridging ability.</p>
+                    <p style="margin-top:10px"><strong>Practice activities:</strong></p>
+                    <ul style="margin:10px 0 0 20px;font-size:0.9em">
+                        <li>Attend ERG events as participant, not leader</li>
+                        <li>Seek mentors/mentees from different backgrounds</li>
+                        <li>Learn about cultural practices, holidays, experiences</li>
+                        <li>Ask genuine questions and listen deeply</li>
+                    </ul>
+                </div>
+                <div class="concept-card" style="border-left-color:var(--gold)">
+                    <div class="concept-title" style="color:var(--gold-dark)">🤝 BONDING</div>
+                    <div class="concept-def">"Connecting authentically with people who are SIMILAR to you in marginalized identity."</div>
+                    <p><strong>Who needs it:</strong> BIPOC leaders connecting with other BIPOC employees</p>
+                    <p style="margin-top:10px"><strong>Practice activities:</strong></p>
+                    <ul style="margin:10px 0 0 20px;font-size:0.9em">
+                        <li>Mentor BIPOC employees authentically</li>
+                        <li>Participate in ERGs as genuine member</li>
+                        <li>Create safe spaces for shared experiences</li>
+                        <li>Advocate for BIPOC advancement</li>
+                    </ul>
+                </div>
+                <div class="concept-card" style="border-left-color:var(--aaa-red)">
+                    <div class="concept-title" style="color:var(--aaa-red)">⚠️ MIRRORING (Warning Sign)</div>
+                    <div class="concept-def">"Workplace impression-management where BIPOC modify behavior, appearance, or values to match white managers."</div>
+                    <p><strong>WARNING:</strong> This indicates a non-inclusive environment. If BIPOC employees are mirroring, your leadership is failing.</p>
+                    <p style="margin-top:10px"><strong>Difference from code-switching:</strong> Code-switching is brief vernacular adjustment. Mirroring is pervasive strategy requiring abandonment of core values and authentic self.</p>
+                    <p style="margin-top:10px"><strong>Signs of mirroring:</strong></p>
+                    <ul style="margin:10px 0 0 20px;font-size:0.9em">
+                        <li>BIPOC employees changing appearance, speech, or values</li>
+                        <li>BIPOC avoiding cultural expression at work</li>
+                        <li>BIPOC not speaking up despite having strong opinions</li>
+                        <li>Homogeneous team behavior despite diverse backgrounds</li>
+                    </ul>
+                </div>
+            </section>
+
+            <!-- ANNUAL CALENDAR SECTION -->
+            <section class="section" id="calendar">
+                <h2 class="section-title">📆 Annual Inclusion Calendar</h2>
+                <p style="margin-bottom:20px;color:var(--text-muted)">Monthly themes and focus areas to maintain inclusive leadership practices year-round.</p>
+                <div class="calendar-grid" id="calendarGrid"></div>
+            </section>
+
+            <!-- KNOWLEDGE CHECK SECTION -->
+            <section class="section" id="quiz">
+                <h2 class="section-title">❓ Knowledge Check: HBR Inclusive Leadership</h2>
+                <p style="margin-bottom:20px;color:var(--text-muted)">Test your understanding of the 10 behaviors, bridging, bonding, and key concepts from the HBR research.</p>
+                <div class="quiz-counter" id="quizCounter">Question 1 of 25</div>
+                <div id="quizContainer"></div>
+                <div id="quizResult" style="display:none"></div>
+                <div style="margin-top:15px;display:flex;gap:10px">
+                    <button class="btn btn-primary" id="nextQuestionBtn" onclick="nextQuestion()">Next Question →</button>
+                    <button class="btn btn-gold" id="restartQuizBtn" onclick="startQuiz()" style="display:none">🔄 Restart Quiz</button>
+                </div>
+            </section>
+
+            <!-- LIFETIME COMMITMENT SECTION -->
+            <section class="section" id="lifetime">
+                <h2 class="section-title">🏆 Lifetime Commitment Journey</h2>
+                <p style="margin-bottom:20px;color:var(--text-muted)">The HBR research is clear: DEI work is never-ending. Here's your perpetual commitment framework.</p>
+                <div class="card" style="border-left-color:var(--aaa-blue)">
+                    <div class="card-title">PHASE 1: FOUNDATION (Weeks 1-12)</div>
+                    <p><strong>Focus:</strong> Building Awareness & Initial Skill Development</p>
+                    <ul style="margin:10px 0 0 20px">
+                        <li>Complete self-assessment and identify 2-3 priority behaviors</li>
+                        <li>Practice bridging/bonding daily</li>
+                        <li>Seek feedback from diverse colleagues</li>
+                        <li>Target: Measurable improvement in all 10 behaviors</li>
+                    </ul>
+                </div>
+                <div class="card" style="border-left-color:var(--gold)">
+                    <div class="card-title">PHASE 2: DEEPENING (Year 1-2)</div>
+                    <p><strong>Focus:</strong> Refining Practice & Expanding Impact</p>
+                    <ul style="margin:10px 0 0 20px">
+                        <li>Mentor and sponsor emerging diverse talent</li>
+                        <li>Lead inclusion initiatives in your area</li>
+                        <li>Address systemic barriers you observe</li>
+                        <li>Target: Become a known inclusion champion</li>
+                    </ul>
+                </div>
+                <div class="card" style="border-left-color:var(--green)">
+                    <div class="card-title">PHASE 3: MASTERY (Years 2+)</div>
+                    <p><strong>Focus:</strong> Systemic Impact & Legacy Building</p>
+                    <ul style="margin:10px 0 0 20px">
+                        <li>Influence organizational policies and practices</li>
+                        <li>Develop other inclusive leaders</li>
+                        <li>Create lasting structural changes</li>
+                        <li>Target: Transform culture; measurable organizational impact</li>
+                    </ul>
+                </div>
+                <div class="card" style="background:linear-gradient(135deg,var(--aaa-blue),var(--aaa-blue-light));color:white;border-left:none">
+                    <div class="card-title" style="color:var(--gold)">📜 THE COMMITMENT</div>
+                    <p style="font-size:1.1em;margin-top:10px">"I commit to the never-ending work of inclusive leadership. I will reflect on my behaviors, augment my strengths, narrow opportunity gaps, and create environments where ALL team members can be their authentic selves."</p>
+                    <p style="margin-top:15px;font-style:italic;color:var(--gold)">— Members First | G$D | True North</p>
+                </div>
+            </section>
+        </main>
+    </div>
+
+    <!-- BEHAVIOR DETAIL MODAL -->
+    <div class="modal-overlay" id="behaviorModal">
+        <div class="modal-content">
+            <button class="modal-close" onclick="closeModal('behaviorModal')">×</button>
+            <div id="behaviorModalContent"></div>
+        </div>
+    </div>
+
+    <!-- OFFLINE INDICATOR -->
+    <div class="offline-indicator" id="offlineIndicator">📡 Working Offline</div>
+
+    <script>
+// ===========================
+// PASSWORD SYSTEM
+// ===========================
+const PASSWORDS = {
+    // Master Admin Password (Wayne)
+    'TrueNorth2026!': { level: 'admin', name: 'Admin Access' },
+    'GSD@Members1st': { level: 'admin', name: 'Admin Access' },
+    
+    // VP/Director Level
+    'VP_Inclusion2026': { level: 'vp', name: 'VP Access' },
+    'Director_Bridge!': { level: 'director', name: 'Director Access' },
+    
+    // Manager Level
+    'Manager_Lead2026': { level: 'manager', name: 'Manager Access' },
+    'TeamLead_Bond!': { level: 'manager', name: 'Manager Access' },
+    
+    // Training Director
+    'Training_Dev2026': { level: 'training', name: 'Training Access' },
+    
+    // Coordinator Level
+    'Coord_Members1st': { level: 'coordinator', name: 'Coordinator Access' },
+    'MemberFirst_26!': { level: 'coordinator', name: 'Coordinator Access' },
+    
+    // Technician Level
+    'Tech_Pride2026': { level: 'technician', name: 'Technician Access' },
+    'ProTech_GSD!': { level: 'technician', name: 'Technician Access' },
+    
+    // Universal Access (all roles)
+    'AAASSU_Inclusive': { level: 'universal', name: 'General Access' },
+    'MembersFirst2026': { level: 'universal', name: 'General Access' }
+};
+
+// ===========================
+// HBR BEHAVIORS DATA
+// ===========================
+const behaviorsData=[
+{num:1,name:'Builds Diverse & Inclusive Teams',low:'Creates teams where BIPOC are in similar roles with similar backgrounds',avg:'Partners with talent acquisition to build teams from diverse sources for 60%+ of jobs',high:'Makes continued efforts with TA and DEI to build diverse teams that can work independently',vpAction:'Set quarterly diversity hiring targets; review team composition monthly',managerAction:'Ensure interview panels include diverse perspectives',techAction:'Include technicians from varied backgrounds on installs'},
+{num:2,name:'Empowers Voice & Decision-Making',low:'Instructs BIPOC on how to lead; heeds only senior white employees',avg:'Allows BIPOC to make autonomous decisions; seeks BIPOC advice during crisis with marginalized communities',high:'Encourages BIPOC to lead projects with autonomy; values input consistently; anticipates disagreements and resolves equitably',vpAction:'Create skip-level forums for technician input; act on feedback visibly',managerAction:'Delegate meaningful projects to diverse team members',techAction:'Ask coordinators for input before implementing schedule changes'},
+{num:3,name:'Models Authenticity, Vulnerability & Openness',low:'Demonstrates commitment to upholding status quo; expects mirroring from BIPOC',avg:'Provides psychological safety for BIPOC to share perspectives',high:'Reveals aspects of self and shares vulnerabilities; creates psychological safety for all',vpAction:'Share personal leadership challenges openly; admit mistakes publicly',managerAction:'Create regular "real talk" sessions; model vulnerability first',techAction:'Ask technicians about their experiences without defensiveness'},
+{num:4,name:'Takes Risks Through Courageous Actions',low:'Remains silent, afraid, and obstructive when BIPOC are mistreated',avg:'Addresses microaggressions when prompted by BIPOC; risks only when low cost',high:'Speaks truth to power when BIPOC are disrespected; intervenes consistently even at personal cost',vpAction:'Escalate inequitable practices to executives; sponsor BIPOC for visible projects',managerAction:'Address problematic behavior immediately regardless of who is involved',techAction:'Intervene when you witness unfair treatment on job sites'},
+{num:5,name:'Admits Bias Through Personal Reflection',low:'Denies having biases and maintains presumption of fairness',avg:'Challenges explicit and overt biases; does not recognize implicit biases',high:'Challenges unfair assumptions in talent, performance, and potential conversations; examines own implicit biases regularly',vpAction:'Complete bias training quarterly; share learnings with leadership team',managerAction:'Review performance ratings for patterns; adjust for identified bias',techAction:'Question assumptions about technician capabilities based on background'},
+{num:6,name:'Applies Empathy & Interest Across Divides',low:'Avoids and remains unaware of cultural differences',avg:'Highlights and celebrates commonalities of all employees; decorates and holds space 70% of the time',high:'Bridges cultural divides with ease; empathizes, values, and shows genuine interest across differences',vpAction:'Attend cultural events; sponsor ERGs; learn about team members\' backgrounds',managerAction:'Understand unique challenges facing diverse team members',techAction:'Ask about family obligations, cultural holidays; accommodate when possible'},
+{num:7,name:'Conducts Forthright Discussions',low:'Avoids difficult conversations; provides only positive feedback',avg:'Addresses issues when they escalate',high:'Communicates with candor, fairness, honesty; gives and solicits high-quality feedback proactively',vpAction:'Model direct feedback in leadership meetings; create feedback culture',managerAction:'Provide real-time feedback; ask for feedback on your leadership',techAction:'Share concerns directly rather than avoiding them'},
+{num:8,name:'Shares Common Goals',low:'Prefers to work alone; does not trust others; creates homogeneous teams doing 50%+ of work alone',avg:'Works with small trusted group',high:'Creates diverse teams focused on shared objectives; distributes work equitably',vpAction:'Set team-based goals; celebrate collaborative wins',managerAction:'Create cross-functional projects; ensure workload distribution is fair',techAction:'Support teammates; share knowledge across the team'},
+{num:9,name:'Supports Trust Building',low:'Creates competitive environment; does not share information',avg:'Builds trust with select individuals',high:'Builds trust across all levels; shares information openly; creates psychological safety',vpAction:'Be transparent about decisions; explain reasoning openly',managerAction:'Keep promises; follow through on commitments',techAction:'Be reliable; help teammates without keeping score'},
+{num:10,name:'Demonstrates Steadfastness',low:'Gives up on DEI when facing resistance',avg:'Maintains efforts when convenient',high:'Perseveres through challenges; accepts DEI work is never-ending; models sustained commitment',vpAction:'Maintain focus on inclusion even during business pressure',managerAction:'Keep inclusion efforts going through team changes',techAction:'Continue learning and growing regardless of setbacks'}
+];
+
+// ===========================
+// COMPREHENSIVE QUIZ QUESTION BANK (25 Questions from Excel)
+// ===========================
+const quizQuestionBank = [
+    // Basic Questions
+    {q:'What is "bridging" in inclusive leadership?',options:['Working remotely','Connecting with people DIFFERENT from you','Building physical bridges','Avoiding conflict'],correct:1,behavior:6,difficulty:'Basic'},
+    {q:'What is "bonding" in inclusive leadership?',options:['Team building exercises','Connecting with people SIMILAR to you in marginalized identity','Financial bonds','Performance bonuses'],correct:1,behavior:6,difficulty:'Basic'},
+    {q:'What is the score range for HIGH ability on the self-assessment?',options:['10-20 points','21-35 points','36-50 points','51-60 points'],correct:2,behavior:'All',difficulty:'Basic'},
+    {q:'What question should leaders ask to practice Behavior 1?',options:['"Who is in charge?"','"Who else is at the table?"','"What is the budget?"','"When is the deadline?"'],correct:1,behavior:1,difficulty:'Basic'},
+    {q:'What should leaders with HIGH ability on inclusion do?',options:['Stop trying since they have achieved mastery','Accept DEI work is never-ending and keep growing','Teach others only and stop personal development','Take a break from inclusion work'],correct:1,behavior:10,difficulty:'Basic'},
+    {q:'What characterizes LOW ability in Behavior 1 (Builds Diverse Teams)?',options:['Making continued DEI efforts','Creating teams where BIPOC are in similar roles with similar backgrounds','Partnering with talent acquisition','Building independent teams'],correct:1,behavior:1,difficulty:'Basic'},
+    {q:'What does HIGH ability look like for Behavior 7 (Forthright Discussions)?',options:['Avoiding difficult conversations','Addressing issues only when they escalate','Communicates with candor, fairness, honesty; gives and solicits high-quality feedback','Only providing positive feedback'],correct:2,behavior:7,difficulty:'Basic'},
+    {q:'What does LOW ability in Behavior 8 (Shared Goals) look like?',options:['Creates diverse teams with shared objectives','Prefers to work alone, does not trust others, creates homogeneous teams doing 50%+ of work alone','Distributes work equitably','Works with cross-functional teams'],correct:1,behavior:8,difficulty:'Basic'},
+    {q:'What should a leader do when they witness BIPOC employee being disrespectfully treated?',options:['Wait for someone else to handle it','Document it for later review','Speak truth to power; intervene even when uncomfortable','Ask the BIPOC employee to handle it themselves'],correct:2,behavior:4,difficulty:'Basic'},
+    {q:'What basic human need does the HBR article say we all share?',options:['Need for money and power','Need to belong, be accepted, and avoid rejection','Need for recognition and awards','Need for personal space'],correct:1,behavior:'All',difficulty:'Basic'},
+    {q:'What should white leaders develop to lead BIPOC employees inclusively?',options:['Bonding skills','Mirroring skills','Bridging skills - ability to connect with people different from them','Code-switching skills'],correct:2,behavior:6,difficulty:'Basic'},
+    {q:'What are the three things leaders should do to become more inclusive?',options:['Hire more, fire less, promote quickly','Reflect on behaviors, augment strengths, narrow opportunity gaps','Train annually, survey quarterly, report monthly','Delegate more, meet less, document everything'],correct:1,behavior:'All',difficulty:'Basic'},
+    
+    // Intermediate Questions
+    {q:'What is "mirroring" and why is it concerning?',options:['Good reflection practices','An inclusive environment indicator','When BIPOC modify behavior to match white managers - indicates non-inclusive environment','Mirror decor in offices'],correct:2,behavior:3,difficulty:'Intermediate'},
+    {q:'What does "speaking truth to power" mean in Behavior 4?',options:['Telling executives what they want to hear','Advocating for BIPOC employees even when it involves personal risk or discomfort','Speaking loudly in meetings','Sending anonymous feedback'],correct:1,behavior:4,difficulty:'Intermediate'},
+    {q:'A leader who only challenges explicit biases is at what ability level?',options:['Low ability - should deny all biases','Average ability - should also challenge implicit biases','High ability - this is sufficient','Master level - ready to teach others'],correct:1,behavior:5,difficulty:'Intermediate'},
+    {q:'How do inclusive leaders handle BIPOC managers\' assessment of their own teams?',options:['Closely supervise their assessments','Enable them to lead and assess without interference','Require approval on all decisions','Assign white managers to verify'],correct:1,behavior:2,difficulty:'Intermediate'},
+    {q:'What does "anticipates disagreements and resolves equitably" demonstrate?',options:['Low ability in Behavior 2','Average ability in Behavior 2','HIGH ability in Behavior 2 (Empowers Voice & Decision-Making)','Conflict avoidance'],correct:2,behavior:2,difficulty:'Intermediate'},
+    {q:'What is problematic about a leader who "only seeks BIPOC advice during crisis with marginalized communities"?',options:['This is excellent crisis management','This is only Average ability - should seek input consistently, not just during crisis','This shows high cultural competence','This is appropriate boundary-setting'],correct:1,behavior:2,difficulty:'Intermediate'},
+    {q:'What fundamental value does mirroring challenge for BIPOC employees?',options:['The value of punctuality','The value of being authentic and real','The value of teamwork','The value of productivity'],correct:1,behavior:3,difficulty:'Intermediate'},
+    {q:'What percentage of job openings should leaders partner with TA on for diverse talent?',options:['At least 25%','At least 40%','At least 60% (Average ability level)','At least 80%'],correct:2,behavior:1,difficulty:'Intermediate'},
+    
+    // Advanced Questions
+    {q:'According to research, what % of white leaders severely lacked bridging ability?',options:['25%','50%','More than 89%','10%'],correct:2,behavior:6,difficulty:'Advanced'},
+    {q:'What is the difference between code-switching and mirroring?',options:['They are the same thing','Code-switching is worse than mirroring','Code-switching is brief vernacular adjustment; mirroring is pervasive strategy requiring abandonment of core values','Mirroring is brief; code-switching is pervasive'],correct:2,behavior:3,difficulty:'Advanced'},
+    {q:'Why might a BIPOC senior leader disengage from DEI initiatives?',options:['They have achieved inclusion mastery','Fear of displaying diversity-valuing behaviors when white boss does not view it as business imperative (mirroring)','They prefer technical work','They have been promoted out of DEI work'],correct:1,behavior:10,difficulty:'Advanced'},
+    {q:'What does "decorates and holds space" mean (Average ability Behavior 6)?',options:['Interior design skills','Creates formal cultural moments but only 70% of the time, not fully committed','Excellent spatial awareness','Planning office layouts'],correct:1,behavior:6,difficulty:'Advanced'},
+    {q:'What methodology did Dr. Rahim-Dillard use to develop the assessment tool?',options:['Online surveys only','Academic research only','Hundreds of surveys, interviews, Appreciative Inquiry focus groups, academic research, tested on workers','Personal experience only'],correct:2,behavior:'All',difficulty:'Advanced'}
+];
+
+// Role-specific weekly plans
+const roleWeeks={
+vp:[
+{week:1,focus:'Team Composition Audit',checkin:'Review current team diversity metrics',action:'Schedule 1:1 with each diverse leader'},
+{week:2,focus:'Voice Amplification',checkin:"Who haven't I heard from this week?",action:'Invite BIPOC manager to present at leadership meeting'},
+{week:3,focus:'Vulnerability Modeling',checkin:'What mistake can I share today?',action:'Share personal DEI learning journey publicly'},
+{week:4,focus:'Courageous Intervention',checkin:'What inequity have I witnessed this week?',action:'Address systemic barrier in hiring/promotion'},
+{week:5,focus:'Bias Reflection',checkin:'What assumption did I make today?',action:'Share personal bias discovery with team'},
+{week:6,focus:'Cultural Bridge Building',checkin:'What cultural practice can I learn about?',action:'Attend ERG meeting as participant'},
+{week:7,focus:'Forthright Leadership',checkin:'What feedback have I avoided giving?',action:'Have direct conversation about performance with candor'},
+{week:8,focus:'Shared Objectives',checkin:'Are my team\'s goals truly shared?',action:'Reset team goals collaboratively'},
+{week:9,focus:'Trust Architecture',checkin:'Where is trust weak on my team?',action:'Address trust gap openly'},
+{week:10,focus:'Sustained Commitment',checkin:'Where have I let inclusion slide?',action:'Recommit publicly to DEI initiative'},
+{week:11,focus:'Integration Week',checkin:'Which behaviors need reinforcement?',action:'Focus on lowest-rated behavior'},
+{week:12,focus:'Assessment & Planning',checkin:'What progress have I made?',action:'Complete assessment; plan next quarter'}
+],
+director:[
+{week:1,focus:'Team Assessment',checkin:'Map diverse talent on my teams',action:'Have career conversation with each BIPOC manager'},
+{week:2,focus:'Decision Empowerment',checkin:'What decision can I delegate today?',action:'Let manager lead client presentation'},
+{week:3,focus:'Authentic Connection',checkin:'Share a challenge you\'re facing',action:'Share what you\'ve learned from a team member'},
+{week:4,focus:'Intervention Practice',checkin:'What microaggression might I have missed?',action:'Address problematic pattern immediately'},
+{week:5,focus:'Assumption Audit',checkin:'What did I assume about someone today?',action:'Adjust rating where bias was identified'},
+{week:6,focus:'Cultural Learning',checkin:'What holiday/practice can I learn about?',action:'Accommodate cultural schedule request'},
+{week:7,focus:'Direct Communication',checkin:'What conversation am I avoiding?',action:'Give specific, actionable feedback'},
+{week:8,focus:'Team Objectives',checkin:'Does everyone know how their work connects?',action:'Create shared metrics dashboard'},
+{week:9,focus:'Trust Repair',checkin:'Have I broken trust with anyone?',action:'Have repair conversation'},
+{week:10,focus:'Consistency Check',checkin:'Where have I been inconsistent?',action:'Document and share commitment'},
+{week:11,focus:'Integration Week',checkin:'Which behaviors need reinforcement?',action:'Focus on lowest-rated behavior'},
+{week:12,focus:'Assessment & Planning',checkin:'What progress have I made?',action:'Complete assessment; plan next quarter'}
+],
+manager:[
+{week:1,focus:'Team Inclusion Baseline',checkin:'Learn one new thing about each team member',action:'Have lunch with team member from different background'},
+{week:2,focus:'Voice Activation',checkin:'Ask: What do you think we should do?',action:'Implement idea from quietest team member'},
+{week:3,focus:'Personal Sharing',checkin:'Share something personal about yourself',action:'Admit a mistake openly to team'},
+{week:4,focus:'Speaking Up Practice',checkin:'Notice and address any unfair treatment',action:'Interrupt inappropriate comment in the moment'},
+{week:5,focus:'Bias Check',checkin:'Challenge an assumption you made today',action:'Reassess assignment you gave based on assumption'},
+{week:6,focus:'Cultural Curiosity',checkin:'Ask about team member\'s cultural background',action:'Accommodate religious/cultural schedule need'},
+{week:7,focus:'Feedback Culture',checkin:'When did I last give developmental feedback?',action:'Provide specific, actionable feedback to each person'},
+{week:8,focus:'Goal Alignment',checkin:'Does everyone know their priorities?',action:'Create visible team goals'},
+{week:9,focus:'Trust Building',checkin:'Who might not trust me fully?',action:'Have vulnerable conversation'},
+{week:10,focus:'Commitment Renewal',checkin:'Where did I fall short this quarter?',action:'Acknowledge and recommit'},
+{week:11,focus:'Integration Week',checkin:'Which behaviors need reinforcement?',action:'Focus on lowest-rated behavior'},
+{week:12,focus:'Assessment & Planning',checkin:'What progress have I made?',action:'Complete assessment; plan next quarter'}
+],
+coordinator:[
+{week:1,focus:'Scheduling Equity',checkin:'Are schedules fair across all technicians?',action:'Adjust scheduling to address inequity'},
+{week:2,focus:'Communication Access',checkin:'Is everyone receiving information equally?',action:'Add communication method for underserved tech'},
+{week:3,focus:'Recognition Practice',checkin:'Who haven\'t I recognized recently?',action:'Recognize technician from different background'},
+{week:4,focus:'Issue Escalation',checkin:'Am I hearing from all technicians equally?',action:'Create safe channel for underserved voices'},
+{week:5,focus:'Development Opportunities',checkin:'Are opportunities shared equitably?',action:'Offer opportunity to overlooked technician'},
+{week:6,focus:'Cultural Awareness',checkin:'What cultural considerations affect scheduling?',action:'Proactively accommodate cultural need'},
+{week:7,focus:'Clear Communication',checkin:'Is everyone getting the same quality info?',action:'Improve communication to struggling tech'},
+{week:8,focus:'Team Goals',checkin:'Does everyone feel part of team success?',action:'Share how each tech contributes to goals'},
+{week:9,focus:'Trust Check',checkin:'Do all techs trust me equally?',action:'Build trust with tech who seems distant'},
+{week:10,focus:'Consistency Review',checkin:'Am I treating everyone the same?',action:'Document and correct any inconsistencies'},
+{week:11,focus:'Integration Week',checkin:'Which behaviors need reinforcement?',action:'Focus on lowest-rated behavior'},
+{week:12,focus:'Assessment & Planning',checkin:'What progress have I made?',action:'Complete assessment; plan next quarter'}
+],
+technician:[
+{week:1,focus:'Know Your Team',checkin:'Learn one thing about a teammate',action:'Have lunch with different teammate'},
+{week:2,focus:'Share Your Voice',checkin:'Contribute one idea in a meeting',action:'Suggest improvement to process'},
+{week:3,focus:'Be Real',checkin:'Share a challenge you\'re working on',action:'Ask for help on something difficult'},
+{week:4,focus:'Speak Up',checkin:'Notice something unfair, say something',action:'Support teammate facing unfairness'},
+{week:5,focus:'Check Assumptions',checkin:'Question an assumption you made today',action:'Ask clarifying question before judging'},
+{week:6,focus:'Cultural Exchange',checkin:'Learn about a teammate\'s culture',action:'Try food/attend event from different culture'},
+{week:7,focus:'Direct Communication',checkin:'What have I been avoiding saying?',action:'Share concern directly with appropriate person'},
+{week:8,focus:'Team Player',checkin:'How did I support the team today?',action:'Help teammate without being asked'},
+{week:9,focus:'Build Trust',checkin:'Who might not trust me fully?',action:'Follow through on a commitment'},
+{week:10,focus:'Stay Committed',checkin:'Where have I stopped trying?',action:'Restart an effort that stalled'},
+{week:11,focus:'Integration Week',checkin:'Which behaviors need reinforcement?',action:'Focus on lowest-rated behavior'},
+{week:12,focus:'Assessment & Planning',checkin:'What progress have I made?',action:'Complete assessment; plan next quarter'}
+]
+};
+
+const calendarData=[
+{month:'January',theme:'Foundation Building',focus:'Establish diversity baseline (Behaviors 1,3)',behaviors:'1, 3'},
+{month:'February',theme:'Black History Month',focus:'Host bridging dialogue; sponsor BIPOC leader (Behaviors 1,2,6)',behaviors:'1, 2, 6'},
+{month:'March',theme:'Voice Amplification',focus:'Skip-level forums; act on feedback (Behaviors 2,4,7)',behaviors:'2, 4, 7'},
+{month:'April',theme:'Courageous Conversations',focus:'Address systemic barriers (Behaviors 4,7)',behaviors:'4, 7'},
+{month:'May',theme:'AAPI Heritage Month',focus:'Attend cultural events; engage with ERGs (Behaviors 6,9)',behaviors:'6, 9'},
+{month:'June',theme:'Pride Month',focus:'Champion LGBTQ+ inclusion; review policies (Behaviors 3,6,10)',behaviors:'3, 6, 10'},
+{month:'July',theme:'Mid-Year Assessment',focus:'Review H1 metrics; adjust strategy (Behaviors 5,9)',behaviors:'5, 9'},
+{month:'August',theme:'Feedback Culture',focus:'Model giving/receiving feedback (Behaviors 5,7)',behaviors:'5, 7'},
+{month:'September',theme:'Hispanic Heritage Month',focus:'Engage with community; celebrate (Behaviors 6,9)',behaviors:'6, 9'},
+{month:'October',theme:'Collaboration Focus',focus:'Cross-territory projects; break silos (Behaviors 8,9)',behaviors:'8, 9'},
+{month:'November',theme:'Native American Heritage',focus:'Connect with Indigenous community (Behaviors 6,9)',behaviors:'6, 9'},
+{month:'December',theme:'Reflection & Planning',focus:'Assess year progress; set strategy (Behaviors 10)',behaviors:'10'}
+];
+
+// Use full question bank for quiz
+let quizQuestions = [];
+let currentQuestion=0,quizScore=0,session=null,assessmentScores={};
+
+function save(key,data){localStorage.setItem('aaassu_il_'+key,JSON.stringify(data));}
+function load(key){const d=localStorage.getItem('aaassu_il_'+key);return d?JSON.parse(d):null;}
+
+// ===========================
+// LOGIN HANDLER WITH PASSWORD
+// ===========================
+function handleLogin(e){
+    e.preventDefault();
+    const name=document.getElementById('loginName').value.trim();
+    const password=document.getElementById('loginPassword').value;
+    const role=document.getElementById('loginRole').value;
+    const territory=document.getElementById('loginTerritory').value;
+    const errorEl=document.getElementById('loginError');
+    const passwordInput=document.getElementById('loginPassword');
+    
+    // Check password
+    const pwdEntry = PASSWORDS[password];
+    if(!pwdEntry){
+        errorEl.classList.add('show');
+        passwordInput.classList.add('error');
+        passwordInput.value='';
+        passwordInput.focus();
+        return false;
+    }
+    
+    // Password valid - check role compatibility
+    const roleMap = {
+        'admin': ['vp','director','manager','training','coord_mgr','member_coord','pro_coord','technician'],
+        'universal': ['vp','director','manager','training','coord_mgr','member_coord','pro_coord','technician'],
+        'vp': ['vp'],
+        'director': ['vp','director'],
+        'manager': ['manager','training'],
+        'training': ['training'],
+        'coordinator': ['coord_mgr','member_coord','pro_coord'],
+        'technician': ['technician']
+    };
+    
+    const allowedRoles = roleMap[pwdEntry.level] || [];
+    if(!allowedRoles.includes(role)){
+        errorEl.textContent = 'Password valid but does not match selected role. Contact your manager for correct access code.';
+        errorEl.classList.add('show');
+        return false;
+    }
+    
+    errorEl.classList.remove('show');
+    passwordInput.classList.remove('error');
+    
+    const roleNames={vp:'VP/National Director',director:'Director Operations',manager:'Manager/Team Lead',training:'Training Director',coord_mgr:'Coordinator Manager',member_coord:'Member Coordinator',pro_coord:'Pro Coordinator',technician:'Technician/Pro'};
+    const isAdmin = pwdEntry.level === 'admin';
+    
+    session={name,role,roleName:roleNames[role],territory,loggedIn:true,accessLevel:pwdEntry.level,isAdmin};
+    save('session',session);
+    showApp(session);
+    return false;
+}
+
+function showApp(s){
+    document.getElementById('loginContainer').style.display='none';
+    document.getElementById('appContainer').style.display='block';
+    
+    let displayName = s.name;
+    if(s.isAdmin){
+        displayName += '<span class="admin-badge">ADMIN</span>';
+    }
+    document.getElementById('displayUserName').innerHTML=displayName;
+    document.getElementById('displayUserRole').textContent=s.roleName+' | '+s.territory.charAt(0).toUpperCase()+s.territory.slice(1);
+    initApp();
+}
+
+function handleLogout(){
+    save('session',null);
+    location.reload();
+}
+
+function showSection(id){
+    document.querySelectorAll('.section').forEach(s=>s.classList.remove('active'));
+    document.querySelectorAll('.nav-tab').forEach(t=>t.classList.remove('active'));
+    const sec=document.getElementById(id);
+    if(sec)sec.classList.add('active');
+    const tab=document.querySelector(`.nav-tab[data-section="${id}"]`);
+    if(tab)tab.classList.add('active');
+}
+
+function openModal(id){document.getElementById(id).classList.add('active');}
+function closeModal(id){document.getElementById(id).classList.remove('active');}
+
+function renderBehaviors(){
+    const html=behaviorsData.map(b=>`
+        <div class="behavior-card" onclick="showBehavior(${b.num})">
+            <div class="behavior-number">${b.num}</div>
+            <div class="behavior-title">${b.name}</div>
+            <div class="level-indicators">
+                <span class="level-dot red" title="Low Ability"></span>
+                <span class="level-dot yellow" title="Average Ability"></span>
+                <span class="level-dot green" title="High Ability"></span>
+            </div>
+        </div>
+    `).join('');
+    document.getElementById('behaviorsGrid').innerHTML=html;
+    document.getElementById('dashboardBehaviors').innerHTML=html;
+}
+
+function showBehavior(num){
+    const b=behaviorsData.find(x=>x.num===num);
+    if(!b)return;
+    document.getElementById('behaviorModalContent').innerHTML=`
+        <h2 style="color:var(--aaa-blue);margin-bottom:15px;font-family:'Bebas Neue',sans-serif;font-size:1.5em">
+            <span style="background:var(--aaa-blue);color:white;width:35px;height:35px;border-radius:50%;display:inline-flex;align-items:center;justify-content:center;margin-right:10px">${b.num}</span>
+            ${b.name}
+        </h2>
+        <div style="display:grid;gap:15px">
+            <div style="background:var(--low-red);padding:15px;border-radius:var(--radius-sm)">
+                <span class="level-badge level-low">LOW ABILITY (1-2)</span>
+                <p style="margin-top:10px">${b.low}</p>
+            </div>
+            <div style="background:var(--avg-yellow);padding:15px;border-radius:var(--radius-sm)">
+                <span class="level-badge level-avg">AVERAGE ABILITY (3)</span>
+                <p style="margin-top:10px">${b.avg}</p>
+            </div>
+            <div style="background:var(--high-green);padding:15px;border-radius:var(--radius-sm)">
+                <span class="level-badge level-high">HIGH ABILITY (4-5)</span>
+                <p style="margin-top:10px">${b.high}</p>
+            </div>
+        </div>
+        <h3 style="margin-top:20px;color:var(--aaa-blue)">Role-Specific Actions:</h3>
+        <div style="margin-top:10px;font-size:0.9em">
+            <p><strong>VP/Director:</strong> ${b.vpAction}</p>
+            <p style="margin-top:8px"><strong>Manager:</strong> ${b.managerAction}</p>
+            <p style="margin-top:8px"><strong>Technician:</strong> ${b.techAction}</p>
+        </div>
+    `;
+    openModal('behaviorModal');
+}
+
+function renderRole(role){
+    const weeks=roleWeeks[role]||roleWeeks.vp;
+    const html=weeks.map((w,i)=>{
+        let phaseClass='foundation';
+        if(i>=4&&i<8)phaseClass='development';
+        if(i>=8)phaseClass='integration';
+        return`
+        <div class="week-card ${phaseClass}">
+            <div class="week-number">Week ${w.week}: ${phaseClass.toUpperCase()}</div>
+            <div class="week-focus">${w.focus}</div>
+            <div class="week-item"><strong>☀️ Daily Check-In:</strong> ${w.checkin}</div>
+            <div class="week-item"><strong>🌉 Bridging Action:</strong> ${w.action}</div>
+        </div>
+    `;}).join('');
+    document.getElementById('roleContent').innerHTML=`<div class="grid-3">${html}</div>`;
+}
+
+function renderAssessment(){
+    const saved=load('assessment')||{};
+    const html=behaviorsData.map(b=>`
+        <tr>
+            <td>${b.num}</td>
+            <td><strong>${b.name}</strong></td>
+            <td style="font-size:0.85em;color:var(--aaa-red)">${b.low}</td>
+            <td style="font-size:0.85em;color:var(--gold-dark)">${b.avg}</td>
+            <td style="font-size:0.85em;color:var(--green)">${b.high}</td>
+            <td><input type="number" min="1" max="5" class="score-input" id="score_${b.num}" value="${saved[b.num]||''}" onchange="updateTotal()"></td>
+        </tr>
+    `).join('');
+    document.getElementById('assessmentBody').innerHTML=html;
+    updateTotal();
+}
+
+function updateTotal(){
+    let total=0;
+    behaviorsData.forEach(b=>{
+        const val=parseInt(document.getElementById('score_'+b.num).value)||0;
+        total+=val;
+        assessmentScores[b.num]=val;
+    });
+    document.getElementById('totalScore').textContent=total;
+    
+    const pct=Math.min(100,Math.round((total/50)*100));
+    document.getElementById('overallProgress').style.width=pct+'%';
+    let msg='Complete your self-assessment to see your progress';
+    if(total>0){
+        if(total<=20)msg=`Score: ${total}/50 - LOW ABILITY. Focus on all 10 behaviors.`;
+        else if(total<=35)msg=`Score: ${total}/50 - AVERAGE ABILITY. Good start, keep growing!`;
+        else msg=`Score: ${total}/50 - HIGH ABILITY. Continue your DEI journey!`;
+    }
+    document.getElementById('progressText').textContent=msg;
+}
+
+function saveAssessment(){
+    save('assessment',assessmentScores);
+    alert('Assessment saved! Your progress is stored locally on this device.');
+}
+
+function renderCalendar(){
+    const html=calendarData.map(m=>`
+        <div class="calendar-month">
+            <div class="calendar-month-header">📅 ${m.month}</div>
+            <div class="calendar-month-theme">${m.theme}</div>
+            <div class="calendar-month-focus"><strong>Focus:</strong> ${m.focus}</div>
+        </div>
+    `).join('');
+    document.getElementById('calendarGrid').innerHTML=html;
+}
+
+// ===========================
+// ENHANCED QUIZ WITH ALL 25 QUESTIONS
+// ===========================
+function shuffleArray(array) {
+    const shuffled = [...array];
+    for (let i = shuffled.length - 1; i > 0; i--) {
+        const j = Math.floor(Math.random() * (i + 1));
+        [shuffled[i], shuffled[j]] = [shuffled[j], shuffled[i]];
+    }
+    return shuffled;
+}
+
+function startQuiz(){
+    quizQuestions = shuffleArray(quizQuestionBank);
+    currentQuestion=0;
+    quizScore=0;
+    document.getElementById('quizResult').style.display='none';
+    document.getElementById('nextQuestionBtn').style.display='inline-block';
+    document.getElementById('restartQuizBtn').style.display='none';
+    renderQuestion();
+}
+
+function getDifficultyBadge(difficulty) {
+    const classes = {
+        'Basic': 'difficulty-basic',
+        'Intermediate': 'difficulty-intermediate',
+        'Advanced': 'difficulty-advanced'
+    };
+    return `<span class="difficulty-badge ${classes[difficulty] || classes['Basic']}">${difficulty || 'Basic'}</span>`;
+}
+
+function renderQuestion(){
+    if(currentQuestion>=quizQuestions.length){
+        endQuiz();
+        return;
+    }
+    const q=quizQuestions[currentQuestion];
+    document.getElementById('quizCounter').textContent = `Question ${currentQuestion+1} of ${quizQuestions.length}`;
+    document.getElementById('quizContainer').innerHTML=`
+        <div class="question-card">
+            <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:10px">
+                <span style="font-size:0.85em;color:var(--text-muted)">Behavior: ${q.behavior}</span>
+                ${getDifficultyBadge(q.difficulty)}
+            </div>
+            <div class="question-text">${q.q}</div>
+            <div class="question-options">
+                ${q.options.map((opt,i)=>`<div class="question-option" data-index="${i}" onclick="selectAnswer(${i})">${opt}</div>`).join('')}
+            </div>
+        </div>
+    `;
+}
+
+function selectAnswer(i){
+    const q=quizQuestions[currentQuestion];
+    const opts=document.querySelectorAll('.question-option');
+    opts.forEach((o,idx)=>{
+        o.classList.remove('selected');
+        if(idx===q.correct)o.classList.add('correct');
+        else if(idx===i)o.classList.add('incorrect');
+        o.onclick=null;
+    });
+    if(i===q.correct)quizScore++;
+}
+
+function nextQuestion(){
+    currentQuestion++;
+    renderQuestion();
+}
+
+function endQuiz(){
+    const pct=Math.round((quizScore/quizQuestions.length)*100);
+    document.getElementById('quizContainer').innerHTML='';
+    document.getElementById('quizCounter').textContent = 'Quiz Complete!';
+    document.getElementById('quizResult').style.display='block';
+    
+    let feedback = '';
+    if(pct >= 90) feedback = 'Outstanding! You demonstrate mastery of HBR inclusive leadership principles.';
+    else if(pct >= 70) feedback = 'Great understanding! Review advanced concepts to reach mastery.';
+    else if(pct >= 50) feedback = 'Good start. Review the 10 behaviors and key concepts to improve.';
+    else feedback = 'Keep learning! Focus on bridging, bonding, and the 10 behaviors.';
+    
+    document.getElementById('quizResult').innerHTML=`
+        <div class="quiz-result" style="background:${pct>=70?'var(--high-green)':pct>=50?'var(--avg-yellow)':'var(--low-red)'}">
+            🎯 You scored ${quizScore}/${quizQuestions.length} (${pct}%)
+            <p style="font-size:0.9em;font-weight:400;margin-top:10px">${feedback}</p>
+        </div>
+    `;
+    document.getElementById('nextQuestionBtn').style.display='none';
+    document.getElementById('restartQuizBtn').style.display='inline-block';
+}
+
+function renderCurrentWeek(){
+    const startDate=new Date('2026-01-01');
+    const now=new Date();
+    const weekNum=Math.min(12,Math.max(1,Math.ceil((now-startDate)/(7*24*60*60*1000))));
+    const roleMap={vp:'vp',director:'director',manager:'manager',training:'manager',coord_mgr:'coordinator',member_coord:'coordinator',pro_coord:'coordinator',technician:'technician'};
+    const role=roleMap[session?.role]||'vp';
+    const week=roleWeeks[role][weekNum-1]||roleWeeks[role][0];
+    document.getElementById('currentWeekFocus').innerHTML=`
+        <div style="font-weight:700;color:var(--aaa-blue);font-size:1.1em;margin-bottom:10px">Week ${week.week}: ${week.focus}</div>
+        <div style="padding:10px;background:var(--surface);border-radius:var(--radius-sm);margin-bottom:8px"><strong>☀️ Today's Check-In:</strong> ${week.checkin}</div>
+        <div style="padding:10px;background:var(--high-green);border-radius:var(--radius-sm)"><strong>🌉 Bridging Action:</strong> ${week.action}</div>
+    `;
+}
+
+function checkOffline(){
+    const ind=document.getElementById('offlineIndicator');
+    function u(){ind.classList.toggle('show',!navigator.onLine)}
+    window.addEventListener('online',u);
+    window.addEventListener('offline',u);
+    u();
+}
+
+function initApp(){
+    renderBehaviors();
+    const roleMap={vp:'vp',director:'director',manager:'manager',training:'manager',coord_mgr:'coordinator',member_coord:'coordinator',pro_coord:'coordinator',technician:'technician'};
+    renderRole(roleMap[session?.role]||'vp');
+    renderAssessment();
+    renderCalendar();
+    renderCurrentWeek();
+    startQuiz();
+    
+    document.querySelectorAll('.nav-tab').forEach(t=>{
+        t.addEventListener('click',()=>showSection(t.dataset.section));
+    });
+    
+    document.querySelectorAll('#roleTabs .tab-btn').forEach(b=>{
+        b.addEventListener('click',()=>{
+            document.querySelectorAll('#roleTabs .tab-btn').forEach(x=>x.classList.remove('active'));
+            b.classList.add('active');
+            renderRole(b.dataset.role);
+        });
+    });
+    
+    document.querySelectorAll('.modal-overlay').forEach(m=>{
+        m.addEventListener('click',(e)=>{if(e.target===m)closeModal(m.id);});
+    });
+    
+    document.addEventListener('keydown',(e)=>{
+        if(e.key==='Escape')document.querySelectorAll('.modal-overlay.active').forEach(m=>closeModal(m.id));
+    });
+    
+    checkOffline();
+}
+
+window.addEventListener('DOMContentLoaded',()=>{
+    const s=load('session');
+    if(s&&s.loggedIn)showApp(s);
+});
+
+if('serviceWorker' in navigator){
+    window.addEventListener('load',()=>{
+        const sw=`data:text/javascript;base64,${btoa("self.addEventListener('install',e=>self.skipWaiting());self.addEventListener('activate',e=>e.waitUntil(self.clients.claim()));self.addEventListener('fetch',e=>{e.respondWith(fetch(e.request).catch(()=>new Response('Offline')));});")}`;
+        navigator.serviceWorker.register(sw).catch(()=>{});
+    });
+}
+    </script>
+</body>
+</html>
